@@ -6,14 +6,19 @@
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
-
 jobs:
-- job: A
+- job: Windows
+  pool:
+    vmImage: 'windows-latest'
   steps:
-  - bash: echo "A"
-
-- job: B
+  - script: echo hello from Windows
+- job: macOS
+  pool:
+    vmImage: 'macOS-latest'
   steps:
-  - bash: echo "B"
+  - script: echo hello from macOS
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - script: echo hello from Linux
