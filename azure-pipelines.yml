@@ -7,18 +7,20 @@ trigger:
 - main
 
 jobs:
-- job: Windows
-  pool:
-    vmImage: 'windows-latest'
+- job: A
   steps:
-  - script: echo hello from Windows
-- job: macOS
-  pool:
-    vmImage: 'macOS-latest'
+  - script: exit 1
+
+- job: B
+  dependsOn: A
+  condition: failed()
   steps:
-  - script: echo hello from macOS
-- job: Linux
-  pool:
-    vmImage: 'ubuntu-latest'
+  - script: echo this will run when A fails
+
+- job: C
+  dependsOn:
+  - A
+  - B
+  condition: succeeded('B')
   steps:
-  - script: echo hello from Linux
+  - script: echo this will run when B runs and succeeds
